@@ -60,9 +60,16 @@ if (tipoUsuario==2) {
     to: '/inicio/proyecto',      
     icon: 'cil-pencil'
   }
+  let informe={
+    _name: 'CSidebarNavItem',
+    name: 'Informe',    
+    to: '/inicio/informe',      
+    icon: 'cil-pencil'
+  }
   modules.push(myProyecto);
   modules.push(roles);
   modules.push(usuarios);
+  modules.push(informe);
 
 }
 if (tipoUsuario==3) { 

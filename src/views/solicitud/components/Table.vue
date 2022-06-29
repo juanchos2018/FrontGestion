@@ -1,11 +1,12 @@
 <template>
   <CCard>
     <CCardHeader>
-      <slot name="header">
+      <slot name="header">      
         <CIcon name="cil-grid"/> {{caption}}
       </slot>
     </CCardHeader>
     <CCardBody>
+        <p>idusaruio {{id_usuario}}</p>
       <CDataTable
         :hover="hover"
         :striped="striped"
@@ -25,7 +26,9 @@
         </template>
         <template #linkdocumento="{item}">
           <td>                 
-            <CButton type="button" color="info"  @click="VerDocumento(item)">Ver</CButton>
+            <CButton type="button" color="info"  @click="VerDocumento(item)" style="margin-right:5px" >Ver</CButton>
+            <CButton v-if="esJefe && item.estado==null" type="button" color="info"  @click="CrearInforme(item)">Crear Informe</CButton>
+            <CButton v-if="esJefe && item.estado=='Aprobado'" type="button" color="info"  @click="dialogoInforme(item)">Ver Informe</CButton>
           </td>
         </template>
       </CDataTable>
@@ -39,18 +42,18 @@ import { mapState } from "vuex";
 export default {
   name: 'Table',
   props: {
+    id_usuario:'',
     items: Array,
     fields: {
       type: Array,
       default () {
-        return [{ label:"Codigo", key: 'id_solicitud', sortable: false },
+        return [  { label:"Codigo", key: 'id_solicitud', sortable: false },
                   { label:"Fecha", key: 'fecha', sortable: false },    
                   { label:"Objetico", key: 'objetivo', sortable: false },
                   { label:"Proyecto", key: 'nombre_proyecto', sortable: false },
                   { label:"Estado", key: 'estado2', sortable: false },                
                   { label:"Documento", key: 'linkdocumento', sortable: false }]
-      },
-   
+      },   
     },
     caption: {
       type: String,
@@ -65,7 +68,16 @@ export default {
   },
   computed: {
     ...mapState(["url_base"]),
+       esAdministrador(){
+      return localStorage.tipoUsuario =='Administrador';
     },
+     esMiembro(){
+      return  localStorage.tipoUsuario =='Miembro';
+    },
+    esJefe(){
+      return  localStorage.tipoUsuario =='Jefe';
+    }
+  },
   methods: {
     getBadge (estado2) {    
       return estado2 == 'Aceptado' ? 'success'
@@ -76,6 +88,14 @@ export default {
     VerDocumento(item) {       
         let url = this.url_base + "solicitud-pdf/"+item.id_solicitud;        
         window.open(url,'_blank');
+    },
+    CrearInforme(item){
+      //console.log(item);
+      this.$emit('crearinforme',item.id_solicitud,item.id_proyecto,this.id_usuario)
+    },
+     dialogoInforme(item){
+      //console.log(item);
+      this.$emit('dialogoInforme',item.id_solicitud,item.id_proyecto,this.id_usuario)
     }
   }
 }

@@ -45,6 +45,7 @@ const Register = () =>
     const SolicitudAdd =() => import('@/views/solicitud/Add')
     const SolicitudEnvida =() => import('@/views/solicitud/List')
     const ListSolicitud =() => import('@/views/solicitud/Listsoli')
+    const ListInforme =() => import('@/views/informe/List')
     
     
     
@@ -181,7 +182,14 @@ function configRoutes() {
                     name: 'solicitudenviada',               
                     component: SolicitudEnvida
                   },
-
+                  
+                  {
+             
+                    path: 'informe',          
+                    name: 'informe',               
+                    component: ListInforme
+                  },
+                  
                   {
              
                     path: 'solicitudlis',          

@@ -2,9 +2,9 @@
   <div>
     <CRow>
       <CCol lg="12">
-        <CTableWrapper :items="items">
+        <CTableWrapper :items="items"  :id_usuario="modelo.id_usuario"  v-on:crearinforme="crearIforme"  v-on:dialogoInforme="dialogoIforme"  >
           <template #header>
-            <CIcon name="cil-grid"/> Solicitudes
+            <CIcon name="cil-grid"/> Solicitudess
             <div class="card-header-actions">
               <a 
                 href="https://coreui.io/vue/docs/components/nav" 
@@ -19,8 +19,8 @@
         </CTableWrapper>
       </CCol>    
     </CRow> 
-
-    
+      <modal-informe @CerrarModal="CerrarModal"    v-on:ListSolicitud="ListSolicitud" />
+      <dialogo-informe @CerrarModal="CerrarModal"     />
   </div>
 </template>
 
@@ -32,10 +32,11 @@ import EventBus from '@/assets/js/EventBus';
 import { mapState } from "vuex";
 import CTableWrapper from './components/Table'
 import usersData from '../users/UsersData'
-
+import ModalInforme from './components/ModalInfome.vue';
+import DialogoInforme from './components/DialogoInforme.vue';
 export default {
   name: 'Tables',
-  components: { CTableWrapper },
+  components: { CTableWrapper,ModalInforme,DialogoInforme},
 
   data(){
       return{
@@ -47,6 +48,7 @@ export default {
     ...mapState(["url_base"])  
   },
   mounted(){        
+   // this.id_usuario=localStorage.id_usuario;
     if(localStorage.id_tipo) this.modelo.id_usuario = localStorage.id_usuario;
     this.ListSolicitud();
   },
@@ -60,19 +62,30 @@ export default {
       }
       return array
     },
-
     getShuffledUsersData () {
       return this.shuffleArray(usersData.slice(0))
     },
+    crearIforme(id,id_proyecto,id_usuario){
+      console.log("idwe :",id);
+      EventBus.$emit("ModalInforme",id,id_proyecto,id_usuario);
+    },
+    dialogoIforme(id,id_proyecto,id_usuario){
+      console.log("idwe :",id);
+      EventBus.$emit("DialogoInforme",id,id_proyecto,id_usuario);
+    },
+    CerrarModal() {
+      this.primaryModal = false;
+    },
     ListSolicitud(){  
+
      let me=this;
-     let url = this.url_base + "solicitud-jefe/"+me.modelo.id_usuario;
-        axios({
+     let url = this.url_base + "solicitud-jefedos/"+me.modelo.id_usuario;
+     axios({
             method: "GET",
             url: url, 
         })
         .then(function (response) {
-            //console.log(response)
+          
         if (response.data.status == 200) {       
             me.items = response.data.result;
         } else {      
