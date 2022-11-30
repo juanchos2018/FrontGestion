@@ -9,7 +9,10 @@
         </div>
       </CCardHeader>
     </CCard>
-    <CRow>
+
+  <div v-if="items.length>0">
+   <CRow >
+
       <CCol sm="6" md="6" v-for="item in items" :key="item.id_proyecto">
           <b-card  border-variant="primary" >
             <b-dropdown no-caret  variant="#FFFFF" style="float:right;font-weight: 400" right >      
@@ -47,6 +50,13 @@
        
       </CCol>
     </CRow>
+  </div>
+   <div v-else>
+    <center>  <img src="img/imagemepty.png"  width="300" alt="">
+        <h5>Sin proyectos</h5></center>
+      
+    </div>
+
 
   <modal-miembro v-on:ListProyecto="ListProyecto"  />
   </div>

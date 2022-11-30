@@ -81,7 +81,7 @@ const axios = require("axios").default;
 import EventBus from "@/assets/js/EventBus";
 import { mapState } from "vuex";
 import ModalVersion from './components/ModalVersion.vue';
-
+const Swal = require("sweetalert2");
 export default {
   components: { ModalVersion },
     name:'view',

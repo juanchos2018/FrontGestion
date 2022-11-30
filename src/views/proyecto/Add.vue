@@ -86,6 +86,7 @@
 const axios = require("axios").default;
 import EventBus from "@/assets/js/EventBus";
 import { mapState } from "vuex";
+const Swal = require("sweetalert2");
 //   listaElementos:[],
 export default {
     data(){
@@ -165,7 +166,8 @@ export default {
                   if (response.data.status == 200) {                 
                       me.fases = response.data.result;
                   } else {               
-                      alert("lsita vacia");
+                    //  alert("lsita vacia");
+                        Swal.fire({ icon: 'warning', text: 'No tiene fases', timer: 2000,})
                     }
                 })
                 .catch((error) => {
@@ -201,18 +203,23 @@ export default {
             },
             RegistrarProyecto(){  
               if (this.modelo.nombre_proyecto=="") {
-                alert("llenar campo nombre proyecto")
+               // alert("llenar campo nombre proyecto")
+                 Swal.fire({ icon: 'warning', text: 'llenar campo nombre proyecto', timer: 2000,})
               }else if (this.modelo.fecha_inicio==""){
-                   alert("llenar campo fecha_inicio")
+                  // alert("llenar campo fecha_inicio")
+                   Swal.fire({ icon: 'warning', text: 'llenar campo fecha_inicio', timer: 2000,})
               }
               else if (this.modelo.fecha_fin==""){
-                   alert("llenar campo fecha_fin")
+                   
+                   Swal.fire({ icon: 'warning', text: 'lenar campo fecha_fin', timer: 2000,})
               }
               else if (this.modelo.id_metodologia==null || this.modelo.id_metodologia==""){
-                   alert("elegit metodolgia")
+                //  alert("elegit metodolgia")
+                   Swal.fire({ icon: 'warning', text: 'Elegir metodolgia', timer: 2000,})
               }
               else if (this.seleccionados.length==0){
-                   alert("elegit elementos de confiuracion")
+                   //alert("elegit elementos de confiuracion")
+                            Swal.fire({ icon: 'warning', text: 'elegir elementos de confiuracion', timer: 2000,})
               }
               else { 
                   this.listaElementos=[];         
@@ -259,7 +266,7 @@ export default {
              let url = this.url_base + "cronogramaelementos";
              axios.post(url,data).then(response => {  
                       this.Limpiar();
-                      alert("Proyecto Registrado");
+                      Swal.fire({ icon: 'success', text: 'Proyecto Registado', timer: 3000,})
                 }).catch(function (error) {
                       console.log(error);
                     

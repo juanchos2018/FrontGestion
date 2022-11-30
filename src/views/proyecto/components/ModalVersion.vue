@@ -43,6 +43,8 @@ import EventBus from "@/assets/js/EventBus";
 import { mapState } from "vuex";
 const axios = require("axios").default;
 
+const Swal = require("sweetalert2");
+
 export default {
   name: "modal-version",
   props: {},
@@ -101,15 +103,19 @@ export default {
       let me = this;
       me.modelo.id_miembro_proyecto =me.menber;
       if (me.modelo.id_miembro_proyecto==null) {
-          alert("elegir responsable")
+       //   alert("elegir responsable")
+            Swal.fire({ icon: 'warning', text: 'elegir responsable', timer: 2000});
       }
       else if (me.modelo.fecha_inicio=="") {
-         alert("elegir fecha inicio")
+        //  alert("elegir fecha inicio")
+          Swal.fire({ icon: 'warning', text: 'elegir fecha inicio', timer: 2000});
       }else if (me.modelo.fecha_inicio=="") {
-         alert("elegir fecha fin")
+         //alert("elegir fecha fin")
+          Swal.fire({ icon: 'warning', text: 'elegir fecha fin', timer: 2000});
       }   
       else if (me.modelo.version=="") {
-         alert("llenar  la version")
+        // alert("llenar  la version")
+         Swal.fire({ icon: 'warning', text: 'llenar  la version', timer: 2000});
       }     
       else{
           let data = me.modelo;
@@ -125,8 +131,10 @@ export default {
               if (response.data.status==200) {
                 me.listar();
                 me.Show = false;
+                Swal.fire({ icon: 'success', text: 'Registado con Exito', timer: 3000,})
               }else{
-                alert(response.data.message);
+               // alert(response.data.message);
+                 Swal.fire({ icon: 'warning', text: response.data.message, timer: 2000});
               } 
               //console.log(response);
                     

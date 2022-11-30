@@ -45,7 +45,7 @@
 import EventBus from "@/assets/js/EventBus";
 import { mapState } from "vuex";
 const axios = require("axios").default;
-
+const Swal = require("sweetalert2");
 export default {
  name: 'modal-tarea',
  props: {},
@@ -83,8 +83,11 @@ export default {
           .then(function (response) {          
             if (response.data.status == 200) {
               me.Show = false; 
-              me.listar();             
+              me.listar();          
+              Swal.fire({ icon: 'success', text: 'Registado con Exito', timer: 3000,})   
             } else {
+                console.log(response);
+                Swal.fire({ icon: 'warning', text: 'hubo alguin error', timer: 2000});
             }
           
           }).catch((error) => {

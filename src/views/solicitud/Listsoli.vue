@@ -5,16 +5,7 @@
         <CTableWrapper :items="items"  :id_usuario="modelo.id_usuario"  v-on:crearinforme="crearIforme"  v-on:dialogoInforme="dialogoIforme"  >
           <template #header>
             <CIcon name="cil-grid"/> Solicitudess
-            <div class="card-header-actions">
-              <a 
-                href="https://coreui.io/vue/docs/components/nav" 
-                class="card-header-action" 
-                rel="noreferrer noopener" 
-                target="_blank"
-              >
-                <small class="text-muted">algo</small>
-              </a>
-            </div>
+          
           </template>
         </CTableWrapper>
       </CCol>    
